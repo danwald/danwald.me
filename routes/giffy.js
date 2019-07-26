@@ -1,12 +1,17 @@
 var express = require('express');
+const multer = require('multer');
+const upload = multer({dest: __dirname + '/uploads/images'});
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-    res.writeHead(200, { 'Content-Type': 'text/json' });
-    var obj = {
-		appName: 'Giffy',
+	res.render('giffy');
+});
+
+router.post('/', upload.single('photo'), (req, res) => {
+    if(req.file) {
+        res.json(req.file);
     }
-    res.end(JSON.stringify(obj));
+    else throw 'error';
 });
 
 module.exports = router;
