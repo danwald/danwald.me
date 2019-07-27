@@ -18,9 +18,13 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "calipers": "^2.0.1",
+    "calipers-gif": "^2.0.0",
+    "calipers-jpeg": "^2.0.0",
+    "calipers-png": "^2.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "http-errors": "~1.6.2",
+    "mathjs": "^6.0.3",
     "morgan": "~1.9.0",
     "multer": "^1.4.2"
   }
