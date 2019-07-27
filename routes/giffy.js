@@ -2,7 +2,7 @@ var express = require('express');
 const multer = require('multer');
 const upload = multer({dest: __dirname + '/uploads/images'});
 var router = express.Router();
-
+var cmd='ffmpeg -framerate 10 -i ${files} -vf scale=${w_h} -f gif'
 router.get('/', function(req, res, next) {
 	res.render('giffy');
 });
