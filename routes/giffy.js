@@ -5,8 +5,9 @@ var router = express.Router();
 var util = require('util')
 var calipers = require('calipers')('png', 'jpeg');
 const math = require('mathjs')
-const { exec } = require('child_process');
-const cmd = 'ffmpeg -framerate 10 -i %s -vf scale=%dx%d -f gif'
+const { spawn } = require('child_process');
+const cmd = 'ffmpeg'
+const params = '-framerate 10 -i %s -vf scale=%dx%d -f gif -'
 const max_extents = 800;
 
 router.get('/', function(req, res, next) {
@@ -17,13 +18,13 @@ router.post('/', upload.array('photos', 10), function (req, res, next) {
 	uploaded_files = req.files
     if(uploaded_files) {
 		paths = []
-        w_h = ''
+        genParams = ''
 		uploaded_files.forEach(function(file){
 			paths.push(file['path'])
 		});
-	    //res.json(paths.join(' '));
+	    console.log(paths);
         calipers.measure(paths[0], function (err, result) {
-          //res.json(result)
+          console.log(result)
           w = result.pages[0].width
           h = result.pages[0].height
           if (w > h){
@@ -33,10 +34,24 @@ router.post('/', upload.array('photos', 10), function (req, res, next) {
               w = math.round(w/h * max_extents);
               h = max_extents;
           }
-          res.json({ 'cmd': util.format(cmd, paths.join(' '), w, h)});
-        });
-
-
+		  genParams = util.format(params, paths.join(' '), w, h)
+		  console.log(`genParams: ${genParams}`);
+        })
+	  	console.log(`cmd: ${cmd}`);
+        console.log(`genParams: ${genParams}`);
+		subProc = spawn(cmd, genParams.split(' '));
+		subProc.stdout.pipe(res)
+		subProc.on('error', (err) => {
+		  console.log(`Failed to start subprocess. ${err}`);
+		});
+		subProc.stderr.on('data', (data) => {
+		  console.log(`stderr: ${data}`);
+		});
+		subProc.on('close', (code) => {
+		  if (code !== 0) {
+			console.log(`process exited with code ${code}`);
+		  }
+		});
     }
     else throw 'error';
 });
