@@ -18,7 +18,6 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "calipers": "^2.0.1",
-    "calipers-gif": "^2.0.0",
     "calipers-jpeg": "^2.0.0",
     "calipers-png": "^2.0.0",
     "ejs": "^2.6.1",
