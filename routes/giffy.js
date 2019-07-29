@@ -17,14 +17,13 @@ router.get('/', function(req, res, next) {
 router.post('/', upload.array('photos', 10), function (req, res, next) {
 	uploaded_files = req.files
     if(uploaded_files) {
-		paths = []
-        genParams = ''
+		var paths = []
+        var genParams = ''
 		uploaded_files.forEach(function(file){
 			paths.push(file['path'])
 		});
-	    console.log(paths);
+	    console.log(`paths: ${paths}`);
         calipers.measure(paths[0], function (err, result) {
-          console.log(result)
           w = result.pages[0].width
           h = result.pages[0].height
           if (w > h){
@@ -34,13 +33,15 @@ router.post('/', upload.array('photos', 10), function (req, res, next) {
               w = math.round(w/h * max_extents);
               h = max_extents;
           }
-		  genParams = util.format(params, paths.join(' '), w, h)
+          console.log(result)
+		  genParams = util.format(params, paths.join(' '), w, h);
 		  console.log(`genParams: ${genParams}`);
-        })
+        });
 	  	console.log(`cmd: ${cmd}`);
         console.log(`genParams: ${genParams}`);
 		subProc = spawn(cmd, genParams.split(' '));
-		subProc.stdout.pipe(res)
+		//subProc = spawn('ls', ['-lah', '/home']);
+		subProc.stdout.pipe(res);
 		subProc.on('error', (err) => {
 		  console.log(`Failed to start subprocess. ${err}`);
 		});
