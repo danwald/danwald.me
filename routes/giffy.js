@@ -34,10 +34,9 @@ router.post('/', upload.array('photos', 50), function (req, res, next) {
               h = max_extents;
           }
           //console.log(result)
-		  genParams = util.format(params, paths.join(' '), w, h);
-		  //console.log(`genParams: ${genParams}`);
-		  //console.log(`cmd: ${cmd}`);
-		  //console.log(`genParams: ${genParams}`);
+		  genParams = util.format(params, paths.join(' -i '), w, h);
+		  console.log(`cmd: ${cmd}`);
+		  console.log(`genParams: ${genParams}`);
 		  subProc = spawn(cmd, genParams.split(' '));
 		  res.set('Content-Type', 'image/gif');
 		  subProc.stdout.pipe(res);
