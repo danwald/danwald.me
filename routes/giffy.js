@@ -36,22 +36,22 @@ router.post('/', upload.array('photos', 50), function (req, res, next) {
           //console.log(result)
 		  genParams = util.format(params, paths.join(' '), w, h);
 		  //console.log(`genParams: ${genParams}`);
-			//console.log(`cmd: ${cmd}`);
-			//console.log(`genParams: ${genParams}`);
-			subProc = spawn(cmd, genParams.split(' '));
-			res.set('Content-Type', 'image/gif');
-			subProc.stdout.pipe(res);
-			subProc.on('error', (err) => {
-			  console.log(`Failed to start subprocess. ${err}`);
-			});
-			subProc.stderr.on('data', (data) => {
-			  console.log(`stderr: ${data}`);
-			});
-			subProc.on('close', (code) => {
-			  if (code !== 0) {
-				console.log(`process exited with code ${code}`);
-			  }
-			});
+		  //console.log(`cmd: ${cmd}`);
+		  //console.log(`genParams: ${genParams}`);
+		  subProc = spawn(cmd, genParams.split(' '));
+		  res.set('Content-Type', 'image/gif');
+		  subProc.stdout.pipe(res);
+		  subProc.on('error', (err) => {
+		    console.log(`Failed to start subprocess. ${err}`);
+		  });
+		  subProc.stderr.on('data', (data) => {
+		    console.log(`stderr: ${data}`);
+		  });
+		  subProc.on('close', (code) => {
+		    if (code !== 0) {
+		  	console.log(`process exited with code ${code}`);
+		    }
+		  });
         });
     }
     else throw 'error';
