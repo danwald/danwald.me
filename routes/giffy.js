@@ -7,7 +7,7 @@ var calipers = require('calipers')('png', 'jpeg');
 const math = require('mathjs')
 const { spawn } = require('child_process');
 const cmd = 'ffmpeg'
-const params = '-framerate 10 -i %s -vf scale=%dx%d -f gif -'
+const params = '-f image2 -framerate 10 -i %s -vf scale=%dx%d -f gif -'
 const max_extents = 600;
 
 router.get('/', function(req, res, next) {
@@ -34,7 +34,7 @@ router.post('/', upload.array('photos', 50), function (req, res, next) {
               h = max_extents;
           }
           //console.log(result)
-		  genParams = util.format(params, paths.join(' -i '), w, h);
+		  genParams = util.format(params, paths.join(' '), w, h);
 		  console.log(`cmd: ${cmd}`);
 		  console.log(`genParams: ${genParams}`);
 		  subProc = spawn(cmd, genParams.split(' '));
