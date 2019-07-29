@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 	res.render('giffy');
 });
 
-router.post('/', upload.array('photos', 10), function (req, res, next) {
+router.post('/', upload.array('photos', 50), function (req, res, next) {
 	uploaded_files = req.files
     if(uploaded_files) {
 		var paths = []
@@ -22,7 +22,7 @@ router.post('/', upload.array('photos', 10), function (req, res, next) {
 		uploaded_files.forEach(function(file){
 			paths.push(file['path'])
 		});
-	    console.log(`paths: ${paths}`);
+	    //console.log(`paths: ${paths}`);
         calipers.measure(paths[0], function (err, result) {
           w = result.pages[0].width
           h = result.pages[0].height
@@ -33,26 +33,26 @@ router.post('/', upload.array('photos', 10), function (req, res, next) {
               w = math.round(w/h * max_extents);
               h = max_extents;
           }
-          console.log(result)
+          //console.log(result)
 		  genParams = util.format(params, paths.join(' '), w, h);
-		  console.log(`genParams: ${genParams}`);
+		  //console.log(`genParams: ${genParams}`);
+			//console.log(`cmd: ${cmd}`);
+			//console.log(`genParams: ${genParams}`);
+			subProc = spawn(cmd, genParams.split(' '));
+			res.set('Content-Type', 'image/gif');
+			subProc.stdout.pipe(res);
+			subProc.on('error', (err) => {
+			  console.log(`Failed to start subprocess. ${err}`);
+			});
+			subProc.stderr.on('data', (data) => {
+			  console.log(`stderr: ${data}`);
+			});
+			subProc.on('close', (code) => {
+			  if (code !== 0) {
+				console.log(`process exited with code ${code}`);
+			  }
+			});
         });
-	  	console.log(`cmd: ${cmd}`);
-        console.log(`genParams: ${genParams}`);
-		subProc = spawn(cmd, genParams.split(' '));
-		//subProc = spawn('ls', ['-lah', '/home']);
-		subProc.stdout.pipe(res);
-		subProc.on('error', (err) => {
-		  console.log(`Failed to start subprocess. ${err}`);
-		});
-		subProc.stderr.on('data', (data) => {
-		  console.log(`stderr: ${data}`);
-		});
-		subProc.on('close', (code) => {
-		  if (code !== 0) {
-			console.log(`process exited with code ${code}`);
-		  }
-		});
     }
     else throw 'error';
 });
