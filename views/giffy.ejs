@@ -10,13 +10,19 @@
 </script>
 </head>
 <body onload=setClientId()>
+	<section>
+    <p class="description">This node app takes in the images(jpg/png) that you feed it and passes it to <a href='https://ffmpeg.org'>ffmpeg</a>. It currently is a single pass, but I plan to use the <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">multi-pass approach soon</a>.</p>
+	</section>
+	<section>
 <form id="frm" method="post" action="/giffy" enctype="multipart/form-data">
   <input type="hidden" name="clientId" id="clientId" readonly>
   Select upto 50 (100kb&lt;) images: <input type="file" accept="image/png, image/jpeg" name="photos" multiple>
   <input type="submit">
 </form>
-
 <p>Try selecting more than one file when browsing for files.</p>
+	</section>
+<section>
 <a href="/">home</a>
+</section>
 </body>
 </html>
