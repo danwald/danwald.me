@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 var router = express.Router();
 var util = require('util')
 var calipers = require('calipers')('png', 'jpeg');
@@ -6,15 +7,17 @@ const math = require('mathjs')
 const { spawn } = require('child_process');
 const multer = require('multer');
 const cmd = 'ffmpeg'
-const params = '-f image2 -framerate 10 -i %s -vf scale=%dx%d -f gif -'
+const params = '-f image2 -framerate 10 -pattern_type glob -i \'%s\' -vf scale=%dx%d -f gif -'
 const max_extents = 600;
+const imageFolder = __dirname + '/uploads/images'
+const imageFormFieldName = 'photos'
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, __dirname + '/uploads/images')
+    cb(null, imageFolder)
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + req.body.clientId +  Date.now())
+    cb(null, file.fieldname + '-' + req.body.clientId + '-' + file.originalname)
   }
 });
 const upload = multer({storage: storage});
@@ -23,9 +26,15 @@ router.get('/', function(req, res, next) {
 	res.render('giffy');
 });
 
-router.post('/', upload.array('photos', 50), function (req, res, next) {
+var getClientImagesGlob = function(id, filename) {
+	return util.format(
+	  '%s/%s-%s-*%s',
+	  imageFolder, imageFormFieldName, id, path.extname(filename)
+	);
+}
+
+router.post('/', upload.array(imageFormFieldName, 50), function (req, res, next) {
 	uploaded_files = req.files
-	form_fields = req.body
     if(uploaded_files) {
 		var paths = []
         var genParams = ''
@@ -44,7 +53,7 @@ router.post('/', upload.array('photos', 50), function (req, res, next) {
               h = max_extents;
           }
           //console.log(result)
-		  genParams = util.format(params, paths.join(' '), w, h);
+		  genParams = util.format(params, getClientImagesGlob(req.body.clientId, req.files[0].path), w, h);
 		  console.log(`cmd: ${cmd}`);
 		  console.log(`genParams: ${genParams}`);
 		  subProc = spawn(cmd, genParams.split(' '));
