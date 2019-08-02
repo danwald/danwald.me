@@ -7,7 +7,7 @@ const math = require('mathjs')
 const { spawn } = require('child_process');
 const multer = require('multer');
 const cmd = 'ffmpeg'
-const params = '-f image2 -framerate 10 -pattern_type glob -i \'%s\' -vf scale=%dx%d -f gif -'
+const params = '-f image2 -framerate 30 -pattern_type glob -i %s -vf scale=%dx%d -f gif -'
 const max_extents = 600;
 const imageFolder = __dirname + '/uploads/images'
 const imageFormFieldName = 'photos'
@@ -34,15 +34,9 @@ var getClientImagesGlob = function(id, filename) {
 }
 
 router.post('/', upload.array(imageFormFieldName, 50), function (req, res, next) {
-	uploaded_files = req.files
-    if(uploaded_files) {
-		var paths = []
+    if(req.files) {
         var genParams = ''
-		uploaded_files.forEach(function(file){
-			paths.push(file['path'])
-		});
-	    //console.log(`paths: ${paths}`);
-        calipers.measure(paths[0], function (err, result) {
+        calipers.measure(req.files[0].path, function (err, result) {
           w = result.pages[0].width
           h = result.pages[0].height
           if (w > h){
@@ -52,10 +46,7 @@ router.post('/', upload.array(imageFormFieldName, 50), function (req, res, next)
               w = math.round(w/h * max_extents);
               h = max_extents;
           }
-          //console.log(result)
 		  genParams = util.format(params, getClientImagesGlob(req.body.clientId, req.files[0].path), w, h);
-		  console.log(`cmd: ${cmd}`);
-		  console.log(`genParams: ${genParams}`);
 		  subProc = spawn(cmd, genParams.split(' '));
 		  res.set('Content-Type', 'image/gif');
 		  subProc.stdout.pipe(res);
