@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
 var getClientImagesGlob = function(id, filename) {
 	return util.format(
 	  '%s/%s-%s-*%s',
-	  imageFolder, imageFormFieldName, id, path.extname(filename)
+	  imageFolder, imageFormFieldName, id, filename ? path.extname(filename): ''
 	);
 }
 
@@ -51,15 +51,30 @@ router.post('/', upload.array(imageFormFieldName, 50), function (req, res, next)
 		  res.set('Content-Type', 'image/gif');
 		  subProc.stdout.pipe(res);
 		  subProc.on('error', (err) => {
-		    console.log(`Failed to start subprocess. ${err}`);
+		    //console.log(`Failed to start subprocess. ${err}`);
 		  });
 		  subProc.stderr.on('data', (data) => {
-		    console.log(`stderr: ${data}`);
+		    //console.log(`stderr: ${data}`);
 		  });
 		  subProc.on('close', (code) => {
 		    if (code !== 0) {
 		  	console.log(`process exited with code ${code}`);
 		    }
+			delProc = spawn(util.format('rm' , [getClientImagesGlob(req.body.clientId)]));
+			delProc.on('close', (code) => {
+			  if (code !== 0) {
+			    console.log(`delete process exited with code ${code}`);
+			  }
+			  else {
+			    console.log(`delete process removed client files`);
+			  }
+			});
+			  delProc.on('error', (err) => {
+				console.log(`del error: ${err}`);
+			  });
+			  delProc.stderr.on('data', (data) => {
+				console.log(`del stderr: ${data}`);
+			  });
 		  });
         });
     }
