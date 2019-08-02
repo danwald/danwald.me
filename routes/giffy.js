@@ -1,14 +1,23 @@
 var express = require('express');
-const multer = require('multer');
-const upload = multer({dest: __dirname + '/uploads/images'});
 var router = express.Router();
 var util = require('util')
 var calipers = require('calipers')('png', 'jpeg');
 const math = require('mathjs')
 const { spawn } = require('child_process');
+const multer = require('multer');
 const cmd = 'ffmpeg'
 const params = '-f image2 -framerate 10 -i %s -vf scale=%dx%d -f gif -'
 const max_extents = 600;
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, __dirname + '/uploads/images')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + req.body.clientId +  Date.now())
+  }
+});
+const upload = multer({storage: storage});
 
 router.get('/', function(req, res, next) {
 	res.render('giffy');
@@ -16,6 +25,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', upload.array('photos', 50), function (req, res, next) {
 	uploaded_files = req.files
+	form_fields = req.body
     if(uploaded_files) {
 		var paths = []
         var genParams = ''
