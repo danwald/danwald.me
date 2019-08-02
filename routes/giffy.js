@@ -10,6 +10,7 @@ const multer = require('multer');
 const cmd = 'ffmpeg'
 const params = '-f image2 -framerate 30 -pattern_type glob -i %s -vf scale=%dx%d -f gif -'
 const max_extents = 600;
+const max_files = 50;
 const imageFolder = __dirname + '/uploads/images'
 const imageFormFieldName = 'photos'
 
@@ -21,7 +22,8 @@ var storage = multer.diskStorage({
     cb(null, file.fieldname + '-' + req.body.clientId + '-' + file.originalname)
   }
 });
-const upload = multer({storage: storage});
+var limits = { 'fields': '10', 'fileSize': 1024000, 'files': max_files }
+const upload = multer({storage: storage, limits: limits});
 
 router.get('/', function(req, res, next) {
 	res.render('giffy');
@@ -34,7 +36,7 @@ var getClientImagesGlob = function(id, filename) {
 	);
 }
 
-router.post('/', upload.array(imageFormFieldName, 50), function (req, res, next) {
+router.post('/', upload.array(imageFormFieldName, max_files), function (req, res, next) {
     if(req.files) {
         var genParams = ''
         calipers.measure(req.files[0].path, function (err, result) {
