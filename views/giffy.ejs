@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
-<body>
-
-<form method="post" action="/giffy" enctype="multipart/form-data">
+<head>
+<script type="text/javascript">
+  function setClientId() {
+	document.getElementById("clientId").value = Math.round(Math.random()*1000000000+1);
+  } 
+</script>
+</head>
+<body onload=setClientId()>
+<form id="frm" method="post" action="/giffy" enctype="multipart/form-data">
   Select images: <input type="file" accept="image/png, image/jpeg" name="photos" multiple>
+  <input type="hidden" name="clientId" id="clientId" readonly>
   <input type="submit">
 </form>
 
