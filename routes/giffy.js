@@ -3,6 +3,7 @@ var path = require('path');
 var router = express.Router();
 var util = require('util')
 var calipers = require('calipers')('png', 'jpeg');
+var fs = require('fs')
 const math = require('mathjs')
 const { spawn } = require('child_process');
 const multer = require('multer');
@@ -60,21 +61,11 @@ router.post('/', upload.array(imageFormFieldName, 50), function (req, res, next)
 		    if (code !== 0) {
 		  	console.log(`process exited with code ${code}`);
 		    }
-			delProc = spawn(util.format('rm' , [getClientImagesGlob(req.body.clientId)]));
-			delProc.on('close', (code) => {
-			  if (code !== 0) {
-			    console.log(`delete process exited with code ${code}`);
-			  }
-			  else {
-			    console.log(`delete process removed client files`);
-			  }
+			req.files.forEach(function(filepath) {
+				fs.unlinkSync(filepath.path, (err) => {
+				console.log("Failed to delete"  + filepath);
+			    });
 			});
-			  delProc.on('error', (err) => {
-				console.log(`del error: ${err}`);
-			  });
-			  delProc.stderr.on('data', (data) => {
-				console.log(`del stderr: ${data}`);
-			  });
 		  });
         });
     }
