@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="assets/style.css" />
+<link rel="shortcut icon" href="assets/favicon.ico" />
 <script type="text/javascript">
   function setClientId() {
 	document.getElementById("clientId").value = Math.round(Math.random()*1000000000+1);
@@ -10,11 +12,11 @@
 <body onload=setClientId()>
 <form id="frm" method="post" action="/giffy" enctype="multipart/form-data">
   <input type="hidden" name="clientId" id="clientId" readonly>
-  Select images: <input type="file" accept="image/png, image/jpeg" name="photos" multiple>
+  Select upto 50 (100kb&lt;) images: <input type="file" accept="image/png, image/jpeg" name="photos" multiple>
   <input type="submit">
 </form>
 
 <p>Try selecting more than one file when browsing for files.</p>
-
+<a href="/">home</a>
 </body>
 </html>
