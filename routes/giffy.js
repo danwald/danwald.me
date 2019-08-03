@@ -7,8 +7,11 @@ var fs = require('fs')
 const math = require('mathjs')
 const { spawn } = require('child_process');
 const multer = require('multer');
-const cmd = 'ffmpeg'
-const params = '-f image2 -framerate 30 -pattern_type glob -i %s -vf scale=%dx%d -f gif -'
+const bin = 'ffmpeg'
+const bin_opts = '-v warning'
+const filters = "fps=30,scale=%s:%s:flags=lanczos"
+
+
 const max_extents = 600;
 const max_files = 50;
 const imageFolder = __dirname + '/uploads/images'
@@ -29,6 +32,19 @@ router.get('/', function(req, res, next) {
 	res.render('giffy');
 });
 
+var genGenPalParams = function(id, filename, w, h) {
+    const globFiles = getClientImagesGlob(id, filename);
+    const filtersSized = util.format(filters, w, h)
+    const paletteFile = util.format("%s/%s-palette.png", imageFolder, id);
+    return `${bin_opts} -f image2 -pattern_type glob -i ${globFiles} -vf ${filtersSized},palettegen -y ${paletteFile}`
+}
+
+var genUsePalParams = function(id, filename, w, h) {
+    const globFiles = getClientImagesGlob(id, filename);
+    const filtersSized = util.format(filters, w, h)
+    const paletteFile = util.format("%s/%s-palette.png", imageFolder, id);
+    return `${bin_opts} -f image2 -pattern_type glob -i ${globFiles} -i ${paletteFile} -lavfi ${filtersSized} [x]; [x][1:v] paletteuse -f gif -`
+}
 var getClientImagesGlob = function(id, filename) {
 	return util.format(
 	  '%s/%s-%s-*%s',
@@ -49,17 +65,16 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
               w = math.round(w/h * max_extents);
               h = max_extents;
           }
-		  genParams = util.format(params, getClientImagesGlob(req.body.clientId, req.files[0].path), w, h);
-		  subProc = spawn(cmd, genParams.split(' '));
-		  res.set('Content-Type', 'image/gif');
-		  subProc.stdout.pipe(res);
-		  subProc.on('error', (err) => {
-		    //console.log(`Failed to start subprocess. ${err}`);
+		  gp = genGenPalParams(req.body.clientId, req.files[0].path, w, h);
+          console.log(`genParams: ${gp}`);
+		  genProc = spawn(bin, gp.split(' '));
+		  genProc.on('error', (err) => {
+		    console.log(`Failed to start subprocess. ${err}`);
 		  });
-		  subProc.stderr.on('data', (data) => {
-		    //console.log(`stderr: ${data}`);
+		  genProc.stderr.on('data', (data) => {
+		    console.log(`stderr: ${data}`);
 		  });
-		  subProc.on('close', (code) => {
+		  genProc.on('close', (code) => {
 		    if (code !== 0) {
 		  	console.log(`process exited with code ${code}`);
 		    }
@@ -68,6 +83,18 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
 				console.log("Failed to delete"  + filepath);
 			    });
 			});
+
+              up = genUsePalParams(req.body.clientId, req.files[0].path, w, h);
+              console.log(`useParams: ${up}`);
+              useProc = spawn(bin, up.split(' '));
+              useProc.stdout.pipe(res);
+		      res.set('Content-Type', 'image/gif');
+              useProc.on('error', (err) => {
+                console.log(`Failed to start subprocess. ${err}`);
+              });
+              useProc.stderr.on('data', (data) => {
+                console.log(`stderr: ${data}`);
+              });
 		  });
         });
     }
@@ -75,4 +102,3 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
 });
 
 module.exports = router;
-
