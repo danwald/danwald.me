@@ -42,10 +42,10 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
         calipers.measure(req.files[0].path, function (err, result) {
           w = result.pages[0].width
           h = result.pages[0].height
-          if (w > h){
+          if (w > h && w > max_extents){
               h = math.round(h/w * max_extents);
               w = max_extents;
-          } else {
+          } else if(h > max_extents)  {
               w = math.round(w/h * max_extents);
               h = max_extents;
           }
