@@ -48,6 +48,7 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
 	        scaleParam = `-vf scale=-1:${max_extents}:flags=lanczos`;
         }
 	    genParams = util.format(params, getClientImagesGlob(req.body.clientId, req.files[0].path), scaleParam);
+	    console.log(`params: ${genParams}`);
 	    subProc = spawn(cmd, genParams.split(' '));
 	    res.set('Content-Type', 'image/gif');
 	    subProc.stdout.pipe(res);
@@ -55,16 +56,16 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
 	      //console.log(`Failed to start subprocess. ${err}`);
 	    });
 	    subProc.stderr.on('data', (data) => {
-	      //console.log(`stderr: ${data}`);
+	      console.log(`stderr: ${data}`);
 	    });
 	    subProc.on('close', (code) => {
 	      if (code !== 0) {
 	    	console.log(`process exited with code ${code}`);
 	      }
 	      req.files.forEach(function(filepath) {
-	      	fs.unlinkSync(filepath.path, (err) => {
-	      	console.log("Failed to delete"  + filepath);
-	        });
+	      	//fs.unlinkSync(filepath.path, (err) => {
+	      	//console.log("Failed to delete"  + filepath);
+	        //});
 	      });
 	    });
       });

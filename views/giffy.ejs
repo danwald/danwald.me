@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="assets/style.css" />
-<link rel="shortcut icon" href="assets/favicon.ico" />
+    <% include gtmHeader %>
+    <% include style %>
 <script type="text/javascript">
   function setClientId() {
 	document.getElementById("clientId").value = Math.round(Math.random()*1000000000+1);
@@ -10,6 +10,7 @@
 </script>
 </head>
 <body onload=setClientId()>
+	<% include gtmBody %>
 	<section>
     <p class="description">This node app takes in the images(jpg/png) that you feed it and passes it to <a href='https://ffmpeg.org'>ffmpeg</a>. It currently is a single pass, but I plan to use the <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">multi-pass approach soon</a>.</p>
 	</section>
