@@ -8,7 +8,8 @@ const math = require('mathjs')
 const { spawn } = require('child_process');
 const multer = require('multer');
 const cmd = 'ffmpeg'
-const params = '-f image2 -framerate 30 -pattern_type glob -i %s %s -f gif -'
+const params = '-f image2 -pattern_type glob -i "%s" %s -f gif -'
+const complexFilter = '-filter_complex "[0:v] fps=30,%s,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"'
 const max_extents = 600;
 const max_files = 50;
 const imageFolder = __dirname + '/uploads/images'
@@ -43,17 +44,19 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
         w = result.pages[0].width
         h = result.pages[0].height
         if (w > h && w > max_extents){
-	        scaleParam = `-vf scale=${max_extents}:-1:flags=lanczos`;
+	        scaleComplex = util.format(complexFilter, `scale=${max_extents}:-1:flags=lanczos`);
         } else if(h > max_extents)  {
-	        scaleParam = `-vf scale=-1:${max_extents}:flags=lanczos`;
+	        scaleComplex = util.format(complexFilter, `scale=-1:${max_extents}:flags=lanczos`);
         }
-	    genParams = util.format(params, getClientImagesGlob(req.body.clientId, req.files[0].path), scaleParam);
-	    console.log(`params: ${genParams}`);
-	    subProc = spawn(cmd, genParams.split(' '));
+	    subProc = spawn(cmd, 
+            ['-f', 'image2', '-pattern_type', 'glob', '-i', 
+             getClientImagesGlob(req.body.clientId, req.files[0].path),
+             '-filter_complex', 
+             ` "[0:v] fps=30,${scaleComplex},split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"`, '-f', 'gif', '-']);
 	    res.set('Content-Type', 'image/gif');
 	    subProc.stdout.pipe(res);
 	    subProc.on('error', (err) => {
-	      //console.log(`Failed to start subprocess. ${err}`);
+	      console.log(`Failed to start subprocess. ${err}`);
 	    });
 	    subProc.stderr.on('data', (data) => {
 	      console.log(`stderr: ${data}`);
