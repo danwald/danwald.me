@@ -12,7 +12,7 @@
 <body onload=setClientId()>
 	<% include gtmBody %>
 	<section>
-    <p class="description">This node app takes in the images(jpg/png) that you feed it and passes it to <a href='https://ffmpeg.org'>ffmpeg</a>. It currently is a single pass, but I plan to use the <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">multi-pass approach soon</a>.</p>
+        <p class="description">This node app takes in the images(jpg/png) that you feed it and passes it to <a href='https://ffmpeg.org'>ffmpeg</a>. It uses multipass method outlined <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">here</a> and <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">here</a>.</p>
 	</section>
 	<section>
 <form id="frm" method="post" action="/giffy" enctype="multipart/form-data">
