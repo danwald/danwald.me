@@ -47,7 +47,7 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
 	        scaleComplex = `scale=-1:${max_extents}:flags=lanczos`;
         }
 	    subProc = spawn(cmd, 
-            ['-loglevel', 'info', '-f', 'image2', '-pattern_type', 'glob', '-i', 
+            ['-loglevel', 'debug', '-f', 'image2', '-pattern_type', 'glob', '-i', 
              getClientImagesGlob(req.body.clientId, req.files[0].path),
              '-filter_complex', 
              `"[0:v] fps=30,${scaleComplex},split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"`, '-f', 'gif', '-']);
