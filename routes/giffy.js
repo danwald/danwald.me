@@ -21,7 +21,7 @@ var storage = multer.diskStorage({
     cb(null, file.fieldname + '-' + req.body.clientId + '-' + file.originalname)
   }
 });
-var limits = { 'fields': '10', 'fileSize': 1024000, 'files': max_files }
+var limits = { 'fields': '10', 'fileSize': 3072000, 'files': max_files }
 const upload = multer({storage: storage, limits: limits});
 
 router.get('/', function(req, res, next) {
