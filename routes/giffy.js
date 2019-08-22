@@ -64,9 +64,9 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
 	    	console.log(`process exited with code ${code}`);
 	      }
 	      req.files.forEach(function(filepath) {
-	      	//fs.unlinkSync(filepath.path, (err) => {
-	      	//console.log("Failed to delete"  + filepath);
-	        //});
+	      	fs.unlinkSync(filepath.path, (err) => {
+	      	console.log("Failed to delete"  + filepath);
+	        });
 	      });
 	    });
       });
