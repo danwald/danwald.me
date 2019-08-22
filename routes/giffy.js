@@ -46,11 +46,19 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
         } else if(h > max_extents)  {
 	        scaleComplex = `scale=-1:${max_extents}:flags=lanczos`;
         }
-	    subProc = spawn(cmd, 
-            ['-loglevel', 'debug', '-f', 'image2', '-pattern_type', 'glob', '-i', 
-             getClientImagesGlob(req.body.clientId, req.files[0].path),
-             '-filter_complex', 
-             `"[0:v] fps=30,${scaleComplex},split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"`, '-f', 'gif', '-'], {shell : true});
+	    subProc = spawn(
+          cmd,
+          [
+            '-loglevel', 'error', //log errors
+            '-f', 'image2', // input as a list of files
+            '-pattern_type', 'glob', '-i', getClientImagesGlob(req.body.clientId, req.files[0].path),
+            '-filter_complex', 
+            `"[0:v] fps=30,${scaleComplex},split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"`,
+            '-f', 'gif', '-' /*output*/
+          ],
+          {shell : true} //there might be a loophole with filenames that I am missing but input is sanitized
+        );
+
 	    res.set('Content-Type', 'image/gif');
 	    subProc.stdout.pipe(res);
 	    subProc.on('error', (err) => {
