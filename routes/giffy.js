@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
 
 var getClientImagesGlob = function(id, filename) {
 	return util.format(
-	  '%s/%s-%s-*%s',
+	  '"%s/%s-%s-*%s"',
 	  imageFolder, imageFormFieldName, id, filename ? path.extname(filename): ''
 	);
 }
@@ -50,7 +50,7 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
             ['-loglevel', 'debug', '-f', 'image2', '-pattern_type', 'glob', '-i', 
              getClientImagesGlob(req.body.clientId, req.files[0].path),
              '-filter_complex', 
-             `"[0:v] fps=30,${scaleComplex},split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"`, '-f', 'gif', '-']);
+             `"[0:v] fps=30,${scaleComplex},split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"`, '-f', 'gif', '-'], {shell : true});
 	    res.set('Content-Type', 'image/gif');
 	    subProc.stdout.pipe(res);
 	    subProc.on('error', (err) => {
