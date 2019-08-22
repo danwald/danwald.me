@@ -37,14 +37,15 @@ var getClientImagesGlob = function(id, filename) {
 
 router.post('/', upload.array(imageFormFieldName, max_files), function (req, res, next) {
     if(req.files) {
-      var scaleParam = ''
         calipers.measure(req.files[0].path, function (err, result) {
         w = result.pages[0].width
         h = result.pages[0].height
         if (w > h && w > max_extents){
-	        scaleComplex = `scale=${max_extents}:-1:flags=lanczos`;
+	        scaleComplex = `scale=${max_extents}:-1:flags=lanczos,`;
         } else if(h > max_extents)  {
-	        scaleComplex = `scale=-1:${max_extents}:flags=lanczos`;
+	        scaleComplex = `scale=-1:${max_extents}:flags=lanczos,`;
+        } else {
+	        scaleComplex = '';
         }
 	    subProc = spawn(
           cmd,
@@ -53,7 +54,7 @@ router.post('/', upload.array(imageFormFieldName, max_files), function (req, res
             '-f', 'image2', // input as a list of files
             '-pattern_type', 'glob', '-i', getClientImagesGlob(req.body.clientId, req.files[0].path),
             '-filter_complex', 
-            `"[0:v] fps=30,${scaleComplex},split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"`,
+            `"[0:v] fps=30,${scaleComplex}split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"`,
             '-f', 'gif', '-' /*output*/
           ],
           {shell : true} //there might be a loophole with filenames that I am missing but input is sanitized
