@@ -10,6 +10,7 @@ const multer = require('multer');
 const cmd = 'ffmpeg'
 const max_extents = 800;
 const max_files = 50;
+const max_filesize = 3072000;
 const imageFolder = __dirname + '/uploads/images'
 const imageFormFieldName = 'photos'
 
@@ -21,11 +22,15 @@ var storage = multer.diskStorage({
     cb(null, file.fieldname + '-' + req.body.clientId + '-' + file.originalname)
   }
 });
-var limits = { 'fields': '10', 'fileSize': 3072000, 'files': max_files }
+var limits = { 'fields': '10', 'fileSize': max_filesize, 'files': max_files }
 const upload = multer({storage: storage, limits: limits});
 
 router.get('/', function(req, res, next) {
-	res.render('giffy');
+	res.render('giffy', {
+        maxFiles: max_files,
+        maxExtents: max_extents,
+        maxFilesize: max_filesize
+    });
 });
 
 var getClientImagesGlob = function(id, filename) {
