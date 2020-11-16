@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <% include gtmHeader %>
-    <% include style %>
+	<% include gtmHeader %>
+	<% include style %>
 <script type="text/javascript">
   function setClientId() {
 	document.getElementById("clientId").value = Math.round(Math.random()*1000000000+1);
   } 
 </script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+	<style>
+		i {
+			width: .2rem;
+		};
+	</style>
 </head>
 <body onload=setClientId()>
 	<% include gtmBody %>
 	<section>
-        <p class="description">This node app takes in the images(jpg/png) that you feed it and passes it to <a href='https://ffmpeg.org'>ffmpeg</a>. It uses multipass method outlined <a href="https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/">here</a> and <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">here</a>. Resized (if needed) to <%=maxExtents%>px aspect maintained gif</p>
+        <p class="info app">This node app takes in the images(jpg/png) that you feed it and passes it to <a href='https://ffmpeg.org'>ffmpeg</a>. It uses multipass method outlined <a href="https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/">here</a> and <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">here</a>. Resized (if needed) to <%=maxExtents%>px aspect maintained gif</p>
 	</section>
 	<section>
-<form id="frm" method="post" action="/giffy" enctype="multipart/form-data">
-  <input type="hidden" name="clientId" id="clientId" readonly>
-  Select upto <%=maxFiles%> (<%=maxFilesize%> bytes&lt;) images: <input type="file" accept="image/png, image/jpeg" name="photos" multiple>
-  <input type="submit">
+		<form id="frm" method="post" action="/giffy" enctype="multipart/form-data">
+  	<input type="hidden" name="clientId" id="clientId" readonly>
+  	<p class="info images">Select upto <%=maxFiles%> (<%=maxFilesize%> bytes&lt;) images: 
+	<!--<input type="file" accept="image/png, image/jpeg" name="photos" multiple> -->
+	<i class="fa fa-upload fa-3" aria-hidden="true"></i>
+		</p>
 </form>
-<p>Try selecting more than one file when browsing for files.</p>
 	</section>
 <section>
 <a href="/">home</a>

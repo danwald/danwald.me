@@ -72,7 +72,8 @@ h2{
     margin:200px auto 0;
 }
 
-p.description{
+p.info{
+    font-size: 1rem;
     padding: 25px;
     text-shadow: 1px 1px 0 #333333;
     margin-bottom: 35px;
@@ -80,6 +81,10 @@ p.description{
     -webkit-box-shadow: 2px 2px 0 rgba(22, 22, 22, 0.1);
     -moz-box-shadow: 2px 2px 0 rgba(22, 22, 22, 0.1);
     box-shadow: 2px 2px 0 rgba(22, 22, 22, 0.1);
+}
+
+p.info.images{
+    font-size: .5rem;
 }
 
 div#content{
