@@ -35,7 +35,7 @@ header{
     margin-bottom: 12px;
 }
 
-h1{
+.my-name {
     font-size:64px;
     font-weight:normal;
     margin-bottom: 12px;
@@ -43,7 +43,7 @@ h1{
     text-shadow:2px 2px 0 rgba(22,22,22,0.5);
 }
 
-h2{
+.my-things {
     color: #202020;
     font-size: 18px;
     font-weight: normal;
