@@ -95,12 +95,12 @@ div#content{
   height: 765px;
 }
 
-ul#nav_links{
-    position: relative;
-    list-style: none;
+.social-icons {
+  text-align: center;
+  padding: 70px 0;
 }
 
-ul#nav_links li{
+.social-icons-links li{
     display: inline;
-    margin: 25px;
+    color: white;
 }
