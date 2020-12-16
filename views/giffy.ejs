@@ -18,27 +18,25 @@
 <body onload=setClientId()>
 	<% include gtmBody %>
 	<div class="giffy-grid">
-		<div class="grid info">
+		<div class="info">
 			<p class="giffy app">This node app takes in the images(jpg/png) that you feed it and passes it to <a href='https://ffmpeg.org'>ffmpeg</a>.</p>
 			<p class="giffy app bib">	It uses multipass method outlined <a href="https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/">here</a> and <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">here</a>. Resized (if needed) to <%=maxExtents%>px aspect maintained gif</p>
 		</div>
 		
 		<form id="frm" method="post" action="/giffy" enctype="multipart/form-data">
 			<input type="hidden" name="clientId" id="clientId" readonly>
-			<div class="grid form info">
-				<p class="info images">Select upto <%=maxFiles%> (<%=maxFilesize%> bytes&lt;) images: </p>
-			</div>
-			<div class="grid form icon">
+			<div class="form-icon">
 			<!--<input type="file" accept="image/png, image/jpeg" name="photos" multiple> -->
-				<i class="fa fa-upload fa-3" aria-hidden="true"></i>
+				<i class="fa fa-upload fa-3" aria-hidden="true" alt='foobar'></i>
+				<span class="form-icon tooltiptext">Select upto <%=maxFiles%> (<%=maxFilesize%> bytes&lt;) images</span>
 			</div>
 		</form>
 		
-		<div class="grid lnk-home">
+		<div class="lnk-home">
 			<a href="/">home</a>
 		</div>
 
-		<div class="grid example">
+		<div class="example">
 			<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Make your gif with <a href="https://t.co/YsrYpqJgJx">https://t.co/YsrYpqJgJx</a> see below <a href="https://twitter.com/hashtag/code?src=hash&amp;ref_src=twsrc%5Etfw">#code</a> <a href="https://twitter.com/hashtag/Nodejs?src=hash&amp;ref_src=twsrc%5Etfw">#Nodejs</a> <a href="https://t.co/Hf5MEt0xhZ">pic.twitter.com/Hf5MEt0xhZ</a></p>&mdash; danny crasto (@danwald) <a href="https://twitter.com/danwald/status/1157379615196758016?ref_src=twsrc%5Etfw">August 2, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 		</div>
 

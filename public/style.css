@@ -85,9 +85,35 @@ p.info{
 .giffy-grid {
     display: grid;
     height: 50px;
-    grid-template-rows: 0.25fr repeat(4, 1fr);
-    border: 1px solid #2d2d2d;
+    grid-template-rows: repeat(4, 1fr);
+	grid-column-gap: 10px;
+
     justify-items: center;
+}
+
+.form-icon {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+
+.form-icon .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.form-icon:hover .tooltiptext {
+    visibility: 1;
+    opacity: 1;
 }
 
 div#content{
@@ -97,10 +123,19 @@ div#content{
 
 .social-icons {
   text-align: center;
-  padding: 70px 0;
+  padding: 1em 1em;
+  list-style: none;
 }
 
 .social-icons-links li{
     display: inline;
+    padding: 1em;
+}
+
+i {
+    color: white;
+}
+
+a#nav_links, ul#nav_links:visited {
     color: white;
 }
