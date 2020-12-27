@@ -139,6 +139,6 @@ i {
     color: white;
 }
 
-a#nav_links, ul#nav_links:visited {
+.lnk a:link, .lnk a:visited {
     color: white;
 }
