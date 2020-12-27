@@ -138,7 +138,6 @@ div#content{
 i {
     color: white;
 }
-
-.lnk a:link, .lnk a:visited {
+.nav-lnk a:link, .nav-lnk a:visited {
     color: white;
 }
