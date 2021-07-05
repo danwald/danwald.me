@@ -1,29 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <% include gtmHeader %>
-    <% include style %>
+	<% include gtmHeader %>
+	<% include style %>
 <script type="text/javascript">
   function setClientId() {
 	document.getElementById("clientId").value = Math.round(Math.random()*1000000000+1);
   } 
 </script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 </head>
 <body onload=setClientId()>
 	<% include gtmBody %>
-	<section>
-        <p class="description">This node app takes in the images(jpg/png) that you feed it and passes it to <a href='https://ffmpeg.org'>ffmpeg</a>. It uses multipass method outlined <a href="https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/">here</a> and <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">here</a>. Resized (if needed) to <%=maxExtents%>px aspect maintained gif</p>
-	</section>
-	<section>
-<form id="frm" method="post" action="/giffy" enctype="multipart/form-data">
-  <input type="hidden" name="clientId" id="clientId" readonly>
-  Select upto <%=maxFiles%> (<%=maxFilesize%> bytes&lt;) images: <input type="file" accept="image/png, image/jpeg" name="photos" multiple>
-  <input type="submit">
-</form>
-<p>Try selecting more than one file when browsing for files.</p>
-	</section>
-<section>
-<a href="/">home</a>
-</section>
+	<div class="giffy-grid">
+		<div class="info">
+			<p class="giffy app">This node app takes in the images(jpg/png) that you feed it and passes it to <a href='https://ffmpeg.org'>ffmpeg</a>.</p>
+			<p class="giffy app bib">	It uses multipass method outlined <a href="https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/">here</a> and <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">here</a>. Resized (if needed) to <%=maxExtents%>px aspect maintained gif</p>
+		</div>
+		
+		<div class="form">
+			<form id="frm" method="post" action="/giffy" enctype="multipart/form-data">
+				<i class="fa fa-upload fa-3 form-icon" aria-hidden="true">
+			  	<input type="hidden" name="clientId" id="clientId" readonly>
+					<span>Select upto <%=maxFiles%> (<%=maxFilesize%>bytes&lt;) images</span>
+					<input class="" type="file" accept="image/png, image/jpeg" name="photos" multiple>
+				</i>
+			</form>
+		</div>
+		
+
+		<div class="example">
+			<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Make your gif with <a href="https://t.co/YsrYpqJgJx">https://t.co/YsrYpqJgJx</a> see below <a href="https://twitter.com/hashtag/code?src=hash&amp;ref_src=twsrc%5Etfw">#code</a> <a href="https://twitter.com/hashtag/Nodejs?src=hash&amp;ref_src=twsrc%5Etfw">#Nodejs</a> <a href="https://t.co/Hf5MEt0xhZ">pic.twitter.com/Hf5MEt0xhZ</a></p>&mdash; danny crasto (@danwald) <a href="https://twitter.com/danwald/status/1157379615196758016?ref_src=twsrc%5Etfw">August 2, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		</div>
+
+		<div class="nav-lnk">
+			<a href="/">home</a>
+		</div>
+
 </body>
 </html>
