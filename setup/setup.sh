@@ -33,3 +33,5 @@ echo "Creating certs"
 certbot --nginx
 systemctl status certbot.timer
 certbot renew --dry-run
+
+echo "To run `pm2 start app.js`"
