@@ -8,7 +8,6 @@
     padding:0;
 }
 
-
 /*-------------------------
     General Styles
 --------------------------*/
@@ -51,7 +50,13 @@ header{
     padding: 15px 0;
 }
 
-
+.no-fluff {
+    text-decoration: none;
+}
+.no-fluff-white {
+    text-decoration: none;
+    color: white;
+}
 /*----------------------------
         Content Area
 -----------------------------*/
@@ -139,5 +144,6 @@ i {
     color: white;
 }
 .nav-lnk a:link, .nav-lnk a:visited {
-    color: white;
+    color: black;
 }
+.
