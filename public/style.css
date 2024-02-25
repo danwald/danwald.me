@@ -53,6 +53,10 @@ header{
 .no-fluff {
     text-decoration: none;
 }
+.no-fluff-white {
+    text-decoration: none;
+    color: white;
+}
 /*----------------------------
         Content Area
 -----------------------------*/
