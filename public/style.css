@@ -52,6 +52,7 @@ header{
 
 .no-fluff {
     text-decoration: none;
+    color: #202020;
 }
 .no-fluff-white {
     text-decoration: none;
@@ -146,4 +147,3 @@ i {
 .nav-lnk a:link, .nav-lnk a:visited {
     color: black;
 }
-.
