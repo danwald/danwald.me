@@ -1,8 +1,4 @@
 *.swp
 tags
-*.pyc
-node_modules*
 .DS_store
 Session.vim
-routes/uploads*
-.tool-versions

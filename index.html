@@ -4,13 +4,25 @@
         <meta charset="utf-8" />
         <meta name="description" content="Online info page of Danny Crasto" />
         <title>About Page</title>
-    <%- include('gtmHeader') %>
-    <%- include('style')%>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KXGPCLB');</script>
+    <!-- End Google Tag Manager -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="error.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
     </head>
     <body>
-        <%- include('gtmBody')%>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXGPCLB"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
         <section id="infoPage">
-            <img src="assets/profile_icon.jpg" alt="Danny Crasto" width="164" height="164" />
+            <img src="profile_icon.jpg" alt="Danny Crasto" width="164" height="164" />
             <header>
                 <h1 class="my-name">Danny Crasto</h1>
 								<h2 class="my-things"><a class="no-fluff" href="https://github.com/dcrasto">coder</a> | <a  class="no-fluff" href="https://photos.app.goo.gl/xrePFp2dfZxK8Z6Q6">traveler</a> | <a class="no-fluff" href="https://photos.app.goo.gl/mWdrhSNYrqh3NNYT7">photographer</a> | <a class="no-fluff" href="https://www.goodreads.com/review/list/174357259-danny-crasto">reader</a> | <a class="no-fluff"  href="https://photos.app.goo.gl/xrePFp2dfZxK8Z6Q6">golfer</a></h2>
@@ -62,14 +74,7 @@
                 <ul>
                     <li>
 											<div class="nav-lnk">
-												<a href="/giffy">Make your own gifs</a>
-											</div>
-										</li>
-                </ul>
-                <ul>
-                    <li>
-											<div class="nav-lnk">
-												<a href="assets/resume.pdf">resume</a>
+												<a href="resume.pdf">resume</a>
 											</div>
 										</li>
                 </ul>
