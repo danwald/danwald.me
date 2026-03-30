@@ -1,5 +1,3 @@
-## Install
-`bash setup/setup.sh`
+#### About
 
-## Run
-`cd /var/www/danwald.me && pm2 start app.js`
+Static website <https://danwald.me>
