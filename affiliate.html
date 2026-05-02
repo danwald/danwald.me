@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="Recommended products and affiliate links" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recommended Products</title>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KXGPCLB');</script>
+    <!-- End Google Tag Manager -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
+    <style>
+      .products-container {
+        width: 600px;
+        margin: 50px auto;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .product-card {
+        background: rgba(50, 50, 50, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 2px 2px 0 rgba(22, 22, 22, 0.3);
+      }
+
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 4px 4px 0 rgba(22, 22, 22, 0.5);
+      }
+
+      .product-card h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+
+      .product-card p {
+        font-size: 13px;
+        color: #ccc;
+        margin-bottom: 15px;
+        line-height: 1.4;
+      }
+
+      .product-card a {
+        display: inline-block;
+        background: linear-gradient(135deg, #FF9900, #FF8C00);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.2s;
+      }
+
+      .product-card a:hover {
+        opacity: 0.9;
+      }
+
+      .back-link {
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      .back-link a {
+        color: #ccc;
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      .back-link a:hover {
+        color: white;
+      }
+
+      h1 {
+        font-size: 48px;
+        text-align: center;
+        font-weight: normal;
+        text-shadow: 2px 2px 0 rgba(22, 22, 22, 0.5);
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #aaa;
+        font-size: 14px;
+        margin-bottom: 30px;
+      }
+
+      @media (max-width: 768px) {
+        .products-container {
+          width: 90%;
+          margin: 20px auto;
+        }
+
+        .product-grid {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 36px;
+        }
+      }
+    </style>
+    </head>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXGPCLB"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager -->
+
+        <div class="products-container">
+            <h1>Recommended</h1>
+            <p class="subtitle">Products I use and recommend (affiliate links)</p>
+
+            <div class="product-grid">
+            </div>
+
+            <div class="back-link">
+                <a href="/">← Back to Home</a>
+            </div>
+        </div>
+    </body>
+</html>
