@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(grep -E '\\\\.\\(js|ejs|html|css|yml|yaml|conf\\)$')",
+      "Bash(find /Users/danny/sandbox/danwald.me -type f -not -path */node_modules/* -not -path */.git/*)",
+      "Bash(rm -f app.js server.conf.js)",
+      "Bash(rm -rf routes/ views/ setup/ node_modules/)",
+      "Bash(open:*)",
+      "WebFetch(domain:danwald.me)",
+      "Skill(pr-list)",
+      "mcp__MCP_DOCKER__pull_request_read",
+      "mcp__MCP_DOCKER__update_pull_request",
+      "mcp__MCP_DOCKER__add_issue_comment"
+    ]
+  }
+}
