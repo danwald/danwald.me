@@ -11,7 +11,8 @@
       "Skill(pr-list)",
       "mcp__MCP_DOCKER__pull_request_read",
       "mcp__MCP_DOCKER__update_pull_request",
-      "mcp__MCP_DOCKER__add_issue_comment"
+      "mcp__MCP_DOCKER__add_issue_comment",
+      "mcp__MCP_DOCKER__fetch_content"
     ]
   }
 }
