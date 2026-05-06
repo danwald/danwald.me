@@ -12,7 +12,18 @@
       "mcp__MCP_DOCKER__pull_request_read",
       "mcp__MCP_DOCKER__update_pull_request",
       "mcp__MCP_DOCKER__add_issue_comment",
-      "mcp__MCP_DOCKER__fetch_content"
+      "mcp__MCP_DOCKER__fetch_content",
+      "Bash(mkdir -p images)",
+      "Bash(wget -q \"https://covers.openlibrary.org/b/isbn/978-0857197689-M.jpg\" -O images/psychology-of-money.jpg)",
+      "Bash(curl -s \"https://covers.openlibrary.org/b/isbn/978-0857197689-M.jpg\" -o images/psychology-of-money.jpg)",
+      "Bash(curl -s \"https://covers.openlibrary.org/b/isbn/979-8664653403-M.jpg\" -o images/system-design-interview-v1.jpg)",
+      "Bash(curl -s \"https://covers.openlibrary.org/b/isbn/978-1736049112-M.jpg\" -o images/system-design-interview-v2.jpg)",
+      "Bash(curl -s \"https://covers.openlibrary.org/b/isbn/1736047809-M.jpg\" -o images/system-design-interview-v1.jpg)",
+      "Bash(curl -s \"https://covers.openlibrary.org/b/id/8429839-M.jpg\" -o /tmp/test1.jpg)",
+      "Read(//tmp/**)",
+      "Bash(curl -s \"https://covers.openlibrary.org/b/olid/OL32899273M-M.jpg\" -o /tmp/test2.jpg)",
+      "Bash(curl -s \"https://covers.openlibrary.org/b/isbn/9798664653403-M.jpg\" -o images/system-design-interview-v1.jpg)",
+      "Bash(curl -s \"https://www.googleapis.com/books/v1/volumes?q=isbn:9798664653403\")"
     ]
   }
 }
